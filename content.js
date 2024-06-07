@@ -12,12 +12,6 @@ function hideVODLengthElements() {
         indicator.style.display = 'none';
     });
 
-    // hide other potential elements related to VOD length
-    const otherElements = document.querySelectorAll('.seekbar-bar, .video-player__overlay, .video-player__controls');
-    otherElements.forEach(element => {
-        element.style.display = 'none';
-    });
-
     // hide text that indicates when the streamer was last live or how long ago the VOD was uploaded
     const textNodes = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
         acceptNode: function(node) {
@@ -40,13 +34,19 @@ function hideVODLengthElements() {
             duration.style.display = 'none';
         }
     });
+
+    // hide text that indicates time left in chapters and other time formats
+    const timeLeftElements = document.querySelectorAll('p.CoreText-sc-1txzju1-0');
+    timeLeftElements.forEach(element => {
+        if (/^\d+ (hour|hours|minute|minutes|second|seconds) \d* (hour|hours|minute|minutes|second|seconds)?( left)?$/.test(element.textContent.trim())) {
+            element.style.display = 'none';
+        }
+    });
 }
 
 // ensure VOD length elements stay hidden
 const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-        hideVODLengthElements();
-    });
+    hideVODLengthElements();
 });
 
 // observe the document body for changes
