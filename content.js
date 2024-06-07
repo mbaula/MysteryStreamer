@@ -1,5 +1,6 @@
 // function to hide elements related to VOD length and progress
 function hideVODLengthElements() {
+    // hide progress bar
     const progressBar = document.querySelector('.seekbar-interaction-area');
     if (progressBar) {
         progressBar.style.display = 'none';
@@ -31,6 +32,14 @@ function hideVODLengthElements() {
     while ((node = textNodes.nextNode())) {
         node.nodeValue = '';
     }
+
+    // hide duration on thumbnail
+    const vodThumbnailDurations = document.querySelectorAll('.tw-media-card-stat');
+    vodThumbnailDurations.forEach(duration => {
+        if (/^\d{1,2}:\d{2}:\d{2}$/.test(duration.textContent.trim())) {
+            duration.style.display = 'none';
+        }
+    });
 }
 
 // ensure VOD length elements stay hidden
