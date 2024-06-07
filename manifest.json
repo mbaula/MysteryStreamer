@@ -1,0 +1,19 @@
+{
+    "manifest_version": 3,
+    "name": "Mystery Streamer",
+    "version": "1.0",
+    "description": "Hides the progress bar on Twitch to keep the length of VODs a mystery.",
+    "permissions": [
+        "activeTab"
+    ],
+    "content_scripts": [
+        {
+        "matches": ["*://www.twitch.tv/*"],
+        "js": ["content.js"]
+        }
+    ],
+    "icons": {
+        "48": "icon.png"
+    }
+}
+  
