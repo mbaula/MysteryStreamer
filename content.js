@@ -16,6 +16,21 @@ function hideVODLengthElements() {
     otherElements.forEach(element => {
         element.style.display = 'none';
     });
+
+    // hide text that indicates when the streamer was last live or how long ago the VOD was uploaded
+    const textNodes = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode: function(node) {
+            if (node.nodeValue.includes('hours ago') || node.nodeValue.includes('last live')) {
+                return NodeFilter.FILTER_ACCEPT;
+            }
+            return NodeFilter.FILTER_REJECT;
+        }
+    });
+
+    let node;
+    while ((node = textNodes.nextNode())) {
+        node.nodeValue = '';
+    }
 }
 
 // ensure VOD length elements stay hidden
