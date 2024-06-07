@@ -30,7 +30,7 @@ function hideVODLengthElements() {
     // hide duration on thumbnail
     const vodThumbnailDurations = document.querySelectorAll('.tw-media-card-stat');
     vodThumbnailDurations.forEach(duration => {
-        if (/^\d{1,2}:\d{2}:\d{2}$/.test(duration.textContent.trim())) {
+        if (/^\d{1,2}:\d{2}(?::\d{2})?$/.test(duration.textContent.trim())) {
             duration.style.display = 'none';
         }
     });
@@ -42,6 +42,12 @@ function hideVODLengthElements() {
             element.style.display = 'none';
         }
     });
+
+    // hide live time
+    const liveTimeElement = document.querySelector('.live-time');
+    if (liveTimeElement) {
+        liveTimeElement.style.display = 'none';
+    }
 }
 
 // function to create and add custom seek buttons
