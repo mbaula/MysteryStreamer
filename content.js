@@ -86,6 +86,29 @@ function addCustomSeekButtons() {
         });
         seekContainer.appendChild(button);
     });
+
+    // create input field and button for custom time input
+    const customTimeInput = document.createElement('input');
+    customTimeInput.type = 'number';
+    customTimeInput.placeholder = 'Enter minutes';
+    customTimeInput.style.margin = '0 5px';
+    customTimeInput.className = 'custom-time-input';
+
+    const customSeekButton = document.createElement('button');
+    customSeekButton.innerText = 'Seek';
+    customSeekButton.className = 'ScCoreButton-sc-ocjdkq-0 caieTg ScButtonIcon-sc-9yap0r-0 dOOPAe custom-seek-button';
+    customSeekButton.style.margin = '0 5px';
+    customSeekButton.addEventListener('click', () => {
+        const video = document.querySelector('video');
+        const timeInMinutes = parseFloat(customTimeInput.value);
+        const timeInSeconds = timeInMinutes * 60;
+        if (video && !isNaN(timeInSeconds)) {
+            video.currentTime += timeInSeconds;
+        }
+    });
+
+    seekContainer.appendChild(customTimeInput);
+    seekContainer.appendChild(customSeekButton);
 }
 
 // ensure VOD length elements stay hidden and custom seek buttons are added
