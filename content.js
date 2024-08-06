@@ -63,10 +63,10 @@ function addCustomSeekButtons() {
 
     // create button elements with different seek intervals
     const seekIntervals = [
-        { label: '-5s', time: -5 },
-        { label: '-30s', time: -30 },
-        { label: '-1m', time: -60 },
         { label: '-5m', time: -300 },
+        { label: '-1m', time: -60 },
+        { label: '-30s', time: -30 },
+        { label: '-5s', time: -5 },
         { label: '+5s', time: 5 },
         { label: '+30s', time: 30 },
         { label: '+1m', time: 60 },
