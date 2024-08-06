@@ -78,6 +78,8 @@ function addCustomSeekButtons() {
         button.innerText = interval.label;
         button.className = 'ScCoreButton-sc-ocjdkq-0 caieTg ScButtonIcon-sc-9yap0r-0 dOOPAe custom-seek-button';
         button.style.margin = '0 5px';
+        button.style.fontSize = '16px';
+        button.style.padding = '10px';
         button.addEventListener('click', () => {
             const video = document.querySelector('video');
             if (video) {
@@ -98,6 +100,7 @@ function addCustomSeekButtons() {
     customSeekButton.innerText = 'Seek';
     customSeekButton.className = 'ScCoreButton-sc-ocjdkq-0 caieTg ScButtonIcon-sc-9yap0r-0 dOOPAe custom-seek-button';
     customSeekButton.style.margin = '0 5px';
+    
     customSeekButton.addEventListener('click', () => {
         const video = document.querySelector('video');
         const timeInMinutes = parseFloat(customTimeInput.value);
