@@ -89,7 +89,7 @@ function addCustomSeekButtons() {
     const customTimeInput = document.createElement('input');
     customTimeInput.type = 'number';
     customTimeInput.className = 'custom-time-input';
-    customTimeInput.placeholder = 'Enter Mins'; 
+    customTimeInput.placeholder = 'Enter Minutes'; 
 
     const customSeekButton = document.createElement('button');
     customSeekButton.innerText = 'Seek';
@@ -162,6 +162,14 @@ style.innerHTML = `
     }
     .custom-time-input:focus {
         border-color: #999;
+    }
+    .custom-time-input::-webkit-outer-spin-button,
+    .custom-time-input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    .custom-time-input {
+        -moz-appearance: textfield;
     }
 `;
 document.head.appendChild(style);
