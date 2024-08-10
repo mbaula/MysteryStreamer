@@ -76,10 +76,7 @@ function addCustomSeekButtons() {
     seekIntervals.forEach(interval => {
         const button = document.createElement('button');
         button.innerText = interval.label;
-        button.className = 'ScCoreButton-sc-ocjdkq-0 caieTg ScButtonIcon-sc-9yap0r-0 dOOPAe custom-seek-button';
-        button.style.margin = '0 5px';
-        button.style.fontSize = '16px';
-        button.style.padding = '10px';
+        button.className = 'custom-seek-button';
         button.addEventListener('click', () => {
             const video = document.querySelector('video');
             if (video) {
@@ -89,24 +86,28 @@ function addCustomSeekButtons() {
         seekContainer.appendChild(button);
     });
 
-    // create input field and button for custom time input
     const customTimeInput = document.createElement('input');
     customTimeInput.type = 'number';
-    customTimeInput.placeholder = 'Enter minutes';
-    customTimeInput.style.margin = '0 5px';
     customTimeInput.className = 'custom-time-input';
+    customTimeInput.placeholder = 'Enter Mins'; 
 
     const customSeekButton = document.createElement('button');
     customSeekButton.innerText = 'Seek';
-    customSeekButton.className = 'ScCoreButton-sc-ocjdkq-0 caieTg ScButtonIcon-sc-9yap0r-0 dOOPAe custom-seek-button';
-    customSeekButton.style.margin = '0 5px';
-    
+    customSeekButton.className = 'custom-seek-button';
     customSeekButton.addEventListener('click', () => {
         const video = document.querySelector('video');
         const timeInMinutes = parseFloat(customTimeInput.value);
         const timeInSeconds = timeInMinutes * 60;
         if (video && !isNaN(timeInSeconds)) {
             video.currentTime += timeInSeconds;
+        }
+    });
+
+    // Add enter key functionality to the input field
+    customTimeInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            customSeekButton.click();
         }
     });
 
@@ -125,3 +126,42 @@ observer.observe(document.body, { childList: true, subtree: true });
 
 hideVODLengthElements();
 addCustomSeekButtons();
+
+// add custom CSS for the buttons and input field
+const style = document.createElement('style');
+style.innerHTML = `
+    .custom-seek-button {
+        background-color: transparent;
+        font-size: 12px;
+        padding: 4px 8px;
+        margin: 0 3px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .custom-seek-button:hover {
+        background-color: #f0f0f0;
+        color: #000;
+    }
+    .custom-time-input {
+        font-size: 12px;
+        padding: 4px 8px; 
+        margin: 0 3px;
+        width: 80px; 
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        outline: none;
+        background-color: #2c2c2c; 
+        color: #f0f0f0; 
+        transition: border-color 0.3s ease;
+        height: 28px; 
+    }
+    .custom-time-input::placeholder {
+        font-size: 10px;
+    }
+    .custom-time-input:focus {
+        border-color: #999;
+    }
+`;
+document.head.appendChild(style);
