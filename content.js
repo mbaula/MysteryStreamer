@@ -1,4 +1,4 @@
-// function to hide elements related to VOD length and progress
+// Function to hide elements related to VOD length and progress
 function hideVODLengthElements() {
     // hide progress bar
     const progressBar = document.querySelector('.seekbar-interaction-area');
@@ -50,7 +50,7 @@ function hideVODLengthElements() {
     }
 }
 
-// function to create and add custom seek buttons
+// Function to create and add custom seek buttons
 function addCustomSeekButtons() {
     const seekContainer = document.querySelector('.video-player__overlay .player-controls__left-control-group');
     if (!seekContainer) {
@@ -115,19 +115,40 @@ function addCustomSeekButtons() {
     seekContainer.appendChild(customSeekButton);
 }
 
-// ensure VOD length elements stay hidden and custom seek buttons are added
-const observer = new MutationObserver((mutations) => {
+function addMiniPlayerButton() {
+    const playerControls = document.querySelector('.player-controls__right-control-group');
+    if (playerControls && !document.getElementById('miniPlayerButton')) {
+        const button = document.createElement('button');
+        button.id = 'miniPlayerButton';
+        button.innerText = 'Mini Player';
+        button.className = 'custom-seek-button'; 
+        button.addEventListener('click', () => {
+            const videoElement = document.querySelector('div.video-player__container video, div.highwind-video-player > div > video');
+            if (videoElement) {
+                videoElement.requestPictureInPicture().catch(error => {
+                    console.error('Failed to enter Picture-in-Picture mode:', error);
+                });
+            } else {
+                console.error('Video element not found.');
+            }
+        });
+        playerControls.appendChild(button);
+    }
+}
+
+const observer = new MutationObserver(() => {
     hideVODLengthElements();
     addCustomSeekButtons();
+    addMiniPlayerButton();
 });
 
-// observe the document body for changes
 observer.observe(document.body, { childList: true, subtree: true });
 
 hideVODLengthElements();
 addCustomSeekButtons();
+addMiniPlayerButton();
 
-// add custom CSS for the buttons and input field
+// Add custom CSS for the buttons and input field
 const style = document.createElement('style');
 style.innerHTML = `
     .custom-seek-button {
