@@ -1,11 +1,23 @@
-// Function to hide elements related to VOD length and progress
-function hideVODLengthElements() {
-    // hide progress bar
-    const progressBar = document.querySelector('.seekbar-interaction-area');
-    if (progressBar) {
-        progressBar.style.display = 'none';
+// function to determine if the current page is a VOD
+function isVOD() {
+    const pathname = window.location.pathname;
+
+    // check url
+    if (pathname.includes('/videos/') || pathname.includes('/collections/')) {
+        return true;
     }
 
+    // look for elements that are specific to VODs
+    const vodElement = document.querySelector('.tw-button[data-a-target="watch-vod"]');
+    if (vodElement) {
+        return true;
+    }
+
+    return false;
+}
+
+// function to hide time indicators (always)
+function hideTimeIndicators() {
     // hide time duration
     const timeIndicators = document.querySelectorAll('[data-a-target="player-seekbar-current-time"], [data-a-target="player-seekbar-duration"], .video-player__time-labels');
     timeIndicators.forEach(indicator => {
@@ -42,16 +54,26 @@ function hideVODLengthElements() {
             element.style.display = 'none';
         }
     });
+}
 
-    // hide live time
-    const liveTimeElement = document.querySelector('.live-time');
-    if (liveTimeElement) {
-        liveTimeElement.style.display = 'none';
+// function to hide progress bar (only during VODs)
+function hideProgressBar() {
+    if (!isVOD()) {
+        return; // exit if it's not a VOD
+    }
+
+    // hide progress bar
+    const progressBar = document.querySelector('.seekbar-interaction-area');
+    if (progressBar) {
+        progressBar.style.display = 'none';
     }
 }
 
 // Function to create and add custom seek buttons
 function addCustomSeekButtons() {
+    if (!isVOD()) {
+        return; 
+    }
     const seekContainer = document.querySelector('.video-player__overlay .player-controls__left-control-group');
     if (!seekContainer) {
         return;
@@ -137,14 +159,16 @@ function addMiniPlayerButton() {
 }
 
 const observer = new MutationObserver(() => {
-    hideVODLengthElements();
+    hideTimeIndicators(); 
+    hideProgressBar(); 
     addCustomSeekButtons();
     addMiniPlayerButton();
 });
 
 observer.observe(document.body, { childList: true, subtree: true });
 
-hideVODLengthElements();
+hideTimeIndicators();
+hideProgressBar();
 addCustomSeekButtons();
 addMiniPlayerButton();
 
